@@ -5,19 +5,30 @@ import { SERVER_BASE_URL } from '../constants'
 import { useAuth } from '../hooks/useAuth'
 import Spinner from './Spinner'
 import { AiOutlineComment }  from 'react-icons/ai'
+import NotFound from './NotFound'
 
 export default function FullBlog() {
   const { id } = useParams()
   const [blog, setBlog] = useState<any>(null)
   const [comment, setComment] = useState("")
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const { loggedIn } = useAuth()
  
   const getBlog = async () => {
     setLoading(true)
-    let { data } = await axios.get(`${SERVER_BASE_URL}/api/blog/${id}`)
-    setBlog(data.blog)
-    setLoading(false)
+    try {
+      let { data } = await axios.get(`${SERVER_BASE_URL}/api/blog/${id}`)
+      if(data.statusload){
+        setBlog(data.blog)
+      }else{
+        setError(true)
+      }
+    } catch (error) {
+      throw new Error("Error Fetching The Blog");
+    }finally{
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -38,6 +49,7 @@ export default function FullBlog() {
   }
 
   if(loading) return <Spinner/>
+  if(error) return <FullBlogError/>
 
   return (
     <div className='w-[95%] md:w-[80%] mx-auto bg-slate-600 p-2 my-3 rounded-md shadow-2xl'>
@@ -63,7 +75,7 @@ export default function FullBlog() {
         {blog.description}
       </div>
 
-      <div className='my-1 p-1 font-roboto text-right'>
+      <div className='my-1 font-roboto text-right'>
         - {blog.username}
       </div>
 
@@ -93,7 +105,7 @@ export default function FullBlog() {
               </button>
           </form> 
           : 
-          <div className='m-1 text-md font-anton'>
+          <div className='m-1 mb-4 text-md font-anton'>
             Login to leave a comment
           </div>
         }
@@ -120,6 +132,14 @@ const Comment = ({ comment }:{ comment:{comment:string, username:string} }) => {
         {comment.comment}
       </div>
 
+    </div>
+  )
+}
+
+const FullBlogError = () => {
+  return (
+    <div className='text-center font-anton text-4xl md:text-6xl xl:text-[100px] flex justify-center items-center h-full drop-shadow-3xl'>
+      Blog Moved Or Deleted
     </div>
   )
 }

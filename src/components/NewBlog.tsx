@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { MdCloudUpload } from 'react-icons/md'
 import { SERVER_BASE_URL } from '../constants'
@@ -16,9 +16,16 @@ export default function NewBlog() {
   const [keyword2, setKeyword2] = useState("")
   const [keyword3, setKeyword3] = useState("")
   const [files, setFiles] = useState<FileList | null>(null)
+  const [imgUrl, setImgUrl] = useState<string | null>(null)
   const [btnDis, setBtnDis] = useState(false)
   const { noteDispatch } = useNotes()
   const { loggedIn } = useAuth()
+
+  useEffect(() => {
+    if(files){
+      setImgUrl(URL.createObjectURL(files[0]))
+    }
+  },[files])
 
   const createBlog = (e:React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,9 +42,9 @@ export default function NewBlog() {
           let res = await axios.post(`${SERVER_BASE_URL}/api/newblog`,{ title, description, keyword1, keyword2, keyword3, url:data.url },{ headers : { Authorization : localStorage.getItem('blogrealauthtoken')!}})
           if(res.data.statusload){
             setTitle("");setDescription("");setKeyword1("");setKeyword2("");setKeyword3("");setFiles(null);
-              noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:res.data.msg,errorOrNot:false}})
-            }else{
-              noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:res.data.msg,errorOrNot:true}})
+            noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:res.data.msg,errorOrNot:false}})
+          }else{
+            noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:res.data.msg,errorOrNot:true}})
           }
         } catch (error) {
           noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:"Error Creating Blog",errorOrNot:true}})
@@ -45,7 +52,6 @@ export default function NewBlog() {
       })
       .catch(() => noteDispatch({type:noteTypes.ADDNOTE,payload:{id:uuid(),content:"Error Uploading Image",errorOrNot:true}}))
       .finally(() => setBtnDis(false))
-
     }
   }
 
@@ -56,6 +62,11 @@ export default function NewBlog() {
       <div
         className='font-anton text-3xl text-center m-3'
       >Create A New Blog</div>
+
+        {imgUrl  && files && (
+          <img src={imgUrl} alt="Upload Image Preview" className='mx-auto' title='Selected Image Preview'/>
+        )}
+
       <form
         onSubmit={createBlog}
         className='flex flex-col justify-around'
@@ -64,7 +75,7 @@ export default function NewBlog() {
         <label htmlFor="file-input" className='cursor-pointer my-1 outline-none p-3 font-roboto rounded-sm bg-slate-900 text-slate-300'>
           <span className='flex items-center'>
             <MdCloudUpload size={24}/>
-            <div className='ml-2'>{files ? files[0].name : "Choose a image"} </div>
+            <div className='ml-2'>Choose a image</div>
           </span>
           <input
             id='file-input'
