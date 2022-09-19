@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState, useEffect } from 'react'
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { SERVER_BASE_URL } from "../constants"
 import Spinner from '../components/Spinner'
 
@@ -42,9 +42,9 @@ export default function Dashboard() {
 
 
 function Blog({ blog }:{blog:Blog}) {
+  const goto = useNavigate()
   return (
-    <Link to={`/${blog._id}`}>
-      <div className="rounded-md bg-slate-900 my-3 flex flex-col md:flex-row text-slate-400 shadow-xl shadow-slate-800 md:h-[180px] ">
+      <div onClick={() => goto(`/${blog._id}`)} className="cursor-pointer rounded-md bg-slate-900 my-3 flex flex-col md:flex-row text-slate-400 shadow-xl shadow-slate-800 md:h-[180px] ">
 
         <div className="md:w-[200px] overflow-hidden h-40 md:h-full">
           <img 
@@ -82,6 +82,5 @@ function Blog({ blog }:{blog:Blog}) {
         </div>
         
       </div>
-    </Link>
   )
 }

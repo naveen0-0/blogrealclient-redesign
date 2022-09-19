@@ -5,7 +5,6 @@ import { SERVER_BASE_URL } from '../constants'
 import { useAuth } from '../hooks/useAuth'
 import Spinner from './Spinner'
 import { AiOutlineComment }  from 'react-icons/ai'
-import NotFound from './NotFound'
 
 export default function FullBlog() {
   const { id } = useParams()

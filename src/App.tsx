@@ -14,6 +14,7 @@ import NewBlog from "./components/NewBlog"
 import Notifications from "./components/Notifications"
 import FullBlog from "./components/FullBlog"
 import NotFound from "./components/NotFound"
+import EditBlog from "./components/EditBlog"
 
 export default function App() {
   const { authDispatch } = useAuth()
@@ -52,6 +53,7 @@ export default function App() {
               <Route path="/user" element={<Profile/>}/>
               <Route path="/:id" element={<FullBlog/>}/>
               <Route path="*" element={<NotFound/>}/>
+              <Route path="/edit/:id" element={<EditBlog/>}/>
             </Routes>
           </div>
         </Router>

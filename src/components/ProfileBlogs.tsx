@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { TbEdit } from 'react-icons/tb'
 import { MdDelete } from 'react-icons/md'
 import { BiLinkExternal } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 
 type BlogType = {
   url : string,
@@ -22,6 +23,8 @@ export default function ProfileBlogs({ blogs }:any) {
 
 
 const Blog = ({ blog }:{ blog:BlogType }) => {
+
+  const goto = useNavigate()
 
   const editBlog = () => {
     console.log("Blog Edited")
@@ -44,10 +47,8 @@ const Blog = ({ blog }:{ blog:BlogType }) => {
         </div>
 
         <div className="p-2 flex">
-          <Link to={`/${blog._id}`}>
-            <button title="Go to Blog" className="hover:bg-slate-800 rounded-full p-2"><BiLinkExternal size={20} color="#64748B"/></button>
-          </Link>
-          <button title="Edit" onClick={editBlog} className="ml-4 hover:bg-slate-800 rounded-full p-2"><TbEdit size={22} color="#64748B"/></button>
+          <button onClick={() => goto(`/${blog._id}`)} title="Go to Blog" className="hover:bg-slate-800 rounded-full p-2"><BiLinkExternal size={20} color="#64748B"/></button>
+          <button onClick={() => goto(`/edit/${blog._id}`)} title="Edit" className="ml-4 hover:bg-slate-800 rounded-full p-2"><TbEdit size={22} color="#64748B"/></button>
           <button title="Delete" onClick={deleteBlog} className="ml-4 hover:bg-slate-800 rounded-full p-2"><MdDelete size={22} color="#64748B"/></button>
         </div>
       </div>
