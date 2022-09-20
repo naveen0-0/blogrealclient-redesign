@@ -38,7 +38,7 @@ export default function Profile() {
   return (
     <div className="w-[95%] md:w-[80%] mx-auto">
 
-      <div className="bg-slate-900 p-2 my-3 rounded-md shadow-2xl font-roboto flex flex-col md:flex-row items-center">
+      <div className="bg-slate-900 p-2 my-3 rounded-md shadow-md shadow-black font-roboto flex flex-col md:flex-row items-center">
         <div className="bg-slate-500 text-slate-900 flex justify-center items-center w-[80px] h-[80px] mx-auto rounded-full text-3xl">{username[0].toUpperCase()}</div>
 
         <div className="flex-1 my-2 text-center text-xl text-slate-400">

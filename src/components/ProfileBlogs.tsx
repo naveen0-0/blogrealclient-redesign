@@ -64,7 +64,7 @@ const Blog = ({ blog, setModalActive, modalActive, setBlogs }:{ blog:BlogType, s
 
 
   return (
-      <div className="bg-slate-900 my-3 rounded-md shadow-2xl font-roboto">
+      <div className="bg-slate-900 my-3 rounded-md shadow-md shadow-black font-roboto">
         <div>
           <img src={blog.url} alt={blog.title} className="w-full h-[100px] object-cover rounded-t-md"/>
         </div>
@@ -74,14 +74,14 @@ const Blog = ({ blog, setModalActive, modalActive, setBlogs }:{ blog:BlogType, s
           <div className="my-2 text-md truncate text-slate-500">{blog.description}</div>
         </div>
 
-        <div className="p-2 flex">
-          <button onClick={() => goto(`/${blog._id}`)} title="Go to Blog" className="hover:bg-slate-800 rounded-full p-2"><BiLinkExternal size={20} color="#64748B"/></button>
-          <button onClick={() => goto(`/edit/${blog._id}`)} title="Edit" className="ml-4 hover:bg-slate-800 rounded-full p-2"><TbEdit size={22} color="#64748B"/></button>
+        <div className="p-2 flex justify-around items-center flex-wrap">
+          <button disabled={modalActive} onClick={() => goto(`/${blog._id}`)} title="Go to Blog" className={`${modalActive?'cursor-not-allowed':'hover:bg-slate-800'} rounded-full p-2`}><BiLinkExternal size={20} color="#64748B"/></button>
+          <button disabled={modalActive} onClick={() => goto(`/edit/${blog._id}`)} title="Edit" className={`${modalActive?'cursor-not-allowed':'hover:bg-slate-800'} ml-4 rounded-full p-2`}><TbEdit size={22} color="#64748B"/></button>
           <button title="Delete" disabled={modalActive} onClick={openModal} className={`${modalActive?'cursor-not-allowed':'hover:bg-slate-800'} ml-4 rounded-full p-2`}><MdDelete size={22} color="#64748B"/></button>
         </div>
 
         {showModal&&
-          <div className='text-center p-4 z-20 cursor-default bg-slate-500 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[95%] md:w-[80%] xl:w-[500px] shadow-slate-900 shadow-md rounded-md'>
+          <div className='text-center p-4 z-20 bg-slate-500 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[95%] md:w-[80%] xl:w-[500px] shadow-black shadow-md rounded-md'>
             <div className='text-2xl py-1'>{blog.title}</div>
             <div className='text-xl py-1'>Are you sure you want to delete this blog?</div>
             <div className='flex flex-col md:flex-row justify-around py-2 h-32 md:h-max'>

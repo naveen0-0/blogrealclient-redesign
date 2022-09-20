@@ -33,7 +33,7 @@ export default function Dashboard() {
   if(loading) return <Spinner/>
   
   return (
-    <div className="m-3">
+    <div className="m-2 md:m-3">
       {blogs.map(blog => <Blog key={blog._id} blog={blog}/>)}
     </div>
   )
@@ -44,21 +44,23 @@ export default function Dashboard() {
 function Blog({ blog }:{blog:Blog}) {
   const goto = useNavigate()
   return (
-      <div onClick={() => goto(`/${blog._id}`)} className="cursor-pointer rounded-md bg-slate-900 my-3 flex flex-col md:flex-row text-slate-400 shadow-xl shadow-slate-800 md:h-[180px] ">
+      <div onClick={() => goto(`/${blog._id}`)} className="cursor-pointer rounded-md bg-slate-900 my-2 md:my-3 flex flex-col md:flex-row text-slate-400 shadow-md shadow-black md:h-[180px] ">
 
-        <div className="md:w-[200px] overflow-hidden h-40 md:h-full">
+        <div className="md:w-[200px] overflow-hidden">
           <img 
             src={blog.url} 
             alt={blog.title} 
-            className="rounded-t-md md:rounded-none md:rounded-l-md md:h-full object-cover w-full hover:scale-110 transition-all ease-out" 
+            className="rounded-t-md md:rounded-none md:rounded-l-md md:h-full object-cover w-full h-[200px] hover:scale-110 transition-all ease-out" 
           />
         </div>
 
-        <div className="flex-1 font-roboto flex-col justify-around p-3 truncate">
+        <div className="flex-1 flex font-roboto flex-col justify-around p-3">
 
           <div className="py-1 text-3xl">{blog.title}</div>
 
-          <div className="py-1 text-md text-slate-500">{blog.description}</div>
+          <div className="truncate md:w-[calc(100vw-200px)] w-full">
+            <div className="py-1 text-md text-slate-500">{blog.description}</div>
+          </div>
 
           <div className='text-slate-400 flex flex-col md:flex-row font-roboto justify-around md:items-center md:justify-start flex-wrap'>
             <div>
