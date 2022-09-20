@@ -39,15 +39,15 @@ export default function Profile() {
     <div className="w-[95%] md:w-[80%] mx-auto">
 
       <div className="bg-slate-900 p-2 my-3 rounded-md shadow-2xl font-roboto flex flex-col md:flex-row items-center">
-        <div className="bg-slate-500 text-slate-900 flex justify-center items-center w-[80px] h-[80px] mx-auto rounded-full">{username[0].toUpperCase()}</div>
+        <div className="bg-slate-500 text-slate-900 flex justify-center items-center w-[80px] h-[80px] mx-auto rounded-full text-3xl">{username[0].toUpperCase()}</div>
 
         <div className="flex-1 my-2 text-center text-xl text-slate-400">
-          <div>{username}</div>
-          <div>{email}</div>
+          <div className="break-all">{username}</div>
+          <div className="break-all">{email}</div>
         </div>
       </div>
 
-      {loading? <Spinner/> : <ProfileBlogs blogs={blogs}/> }
+      {loading? <Spinner/> : <ProfileBlogs blogs={blogs} setBlogs={setBlogs}/> }
 
     </div>
   )
