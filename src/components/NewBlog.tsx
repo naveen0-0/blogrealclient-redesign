@@ -38,7 +38,6 @@ export default function NewBlog() {
 
       axios.post('https://api.cloudinary.com/v1_1/ddwkg0hpz/image/upload',formData)
       .then(async ({ data }) => {
-        console.log(data)
         try {
           let res = await axios.post(`${SERVER_BASE_URL}/api/newblog`,{ title, description, keyword1, keyword2, keyword3, url:data.secure_url },{ headers : { Authorization : localStorage.getItem('blogrealauthtoken')!}})
           if(res.data.statusload){
