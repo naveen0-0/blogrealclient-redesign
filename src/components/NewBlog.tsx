@@ -22,7 +22,7 @@ export default function NewBlog() {
   const { loggedIn } = useAuth()
 
   useEffect(() => {
-    if(files){
+    if(files?.length === 1){
       setImgUrl(URL.createObjectURL(files[0]))
     }
   },[files])
@@ -63,7 +63,7 @@ export default function NewBlog() {
         className='font-anton text-3xl text-center m-3'
       >Create A New Blog</div>
 
-        {imgUrl  && files && (
+        {imgUrl  && (
           <img src={imgUrl} alt="Upload Image Preview" className='mx-auto' title='Selected Image Preview'/>
         )}
 

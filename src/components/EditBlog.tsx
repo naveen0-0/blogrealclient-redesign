@@ -27,7 +27,7 @@ export default function EditBlog() {
   const goto = useNavigate()
 
   useEffect(() => {
-    if(files){
+    if(files?.length===1){
       setImgUrl(URL.createObjectURL(files[0]))
     }
   },[files])
