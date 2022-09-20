@@ -59,6 +59,7 @@ const Blog = ({ blog, setModalActive, modalActive, setBlogs }:{ blog:BlogType, s
     }finally{
       setBtnDis(false)
       setShowModal(false)
+      setModalActive(false)
     }
   }
 
